@@ -7,7 +7,7 @@ require './news_parser'
 
 # telegram bot
 class LozovaNewsBot
-  def initialize(url, channel)
+  def initialize(channel)
     @logger = Logger.new(STDOUT)
     @token = '422425129:AAH3PiFT6MRnnsM9xHgku6NLJU5HPFnEtEo'.freeze
 
