@@ -3,24 +3,22 @@ require 'sdbm'
 require 'json'
 require 'logger'
 require 'pg'
-require './news_parser'
+require_relative 'news_parser'
 
 # telegram bot
 class LozovaNewsBot
   def initialize(channel)
     @logger = Logger.new(STDOUT)
-    @token = '422425129:AAH3PiFT6MRnnsM9xHgku6NLJU5HPFnEtEo'.freeze
-
-
-    # if ENV['TELEGRAM_BOT_API_KEY'].nil?
-    #   @logger.fatal 'Environment variable TELEGRAM_BOT_API_KEY not set!'
-    #   exit 0
-    # else
-    #   @token = ENV['TELEGRAM_BOT_API_KEY']
-    # end
+    if ENV['TELEGRAM_BOT_API_KEY'].nil?
+      @logger.fatal 'Environment variable TELEGRAM_BOT_API_KEY not set!'
+      exit 0
+    else
+      @token = ENV['TELEGRAM_BOT_API_KEY']
+    end
 
     @channel = channel
-    @db = PG.connect(host: 'localhost', port: '5432', dbname: nil, user: 'postgres', password: '1')
+    # @db = PG.connect(host: 'localhost', port: '5432', dbname: nil, user: 'postgres', password: '1')
+    @db = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
     @db.exec('CREATE TABLE IF NOT EXISTS posts (id serial, url varchar(450) NOT NULL, sended bool DEFAULT false)')
   end
 
