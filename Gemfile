@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}"
 end
-
+ruby '2.4.1'
 gem 'nokogiri'
 gem 'pg'
 gem 'telegram-bot-ruby'
