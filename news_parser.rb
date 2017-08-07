@@ -9,7 +9,7 @@ class NewsParser
 
   def initialize
     @links = []
-    @posts = []
+    #@posts = []
   end
 
   MAIN_NEWS = 'http://lozovarada.gov.ua/golovni-novini.html'.freeze
@@ -21,9 +21,9 @@ class NewsParser
     page.css('div.blognews h2 a').each do |link|
       @links.push "http://lozovarada.gov.ua#{link['href']}"
     end
-    page.css('div.blognews [style="text-align: justify;"]').each do |text|
-      @posts.push text.text
-    end
+    # page.css('div.blognews [style="text-align: justify;"]').each do |text|
+    #   @posts.push text.text
+    # end
   end
 
   def news
@@ -31,10 +31,9 @@ class NewsParser
     page.css('div.blognews h2 a').each do |link|
       @links.push "http://lozovarada.gov.ua#{link['href']}"
     end
-    page.css('div.blognews [style="text-align: justify;"]').each do |text|
-      @posts.push text.text
-    end
-
+    #page.css('div.blognews [style="text-align: justify;"]').each do |text|
+    #   @posts.push text.text
+    # end
   end
 
   def tv_news
@@ -42,16 +41,9 @@ class NewsParser
     page.css('div.blogtv h2 a').each do |link|
       @links.push "http://lozovarada.gov.ua#{link['href']}"
     end
-    page.css('div.blogtv [itemprop="blogPost"] p').map(&:text).each do |text|
-      @posts.push text.to_s.gsub("\n", "")
-
-    end
+    # page.css('div.blogtv [itemprop="blogPost"] p').map(&:text).each do |text|
+    #   @posts.push text.to_s.gsub("\n", "")
+    # end
   end
 end
 
-#a = NewsParser.new
-# a.main_news
-# a.news
-# h = Hash[a.links.zip a.posts]
-# a.tv_news
-# puts a.posts
