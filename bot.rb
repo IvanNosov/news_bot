@@ -21,7 +21,7 @@ class LozovaNewsBot
     @db = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
     @db.exec('CREATE TABLE IF NOT EXISTS posts (id serial, url varchar(450) NOT NULL, sended bool DEFAULT false)')
   end
-
+#
   def sync
     parser = NewsParser.new
     parser.main_news
