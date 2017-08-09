@@ -29,7 +29,7 @@ class LozovaNewsBot
     parser.tv_news
     parser.links.each do |href|
       h = ShortURL.shorten(href, :tinyurl)
-      if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{href}' LIMIT 1)::int").values[0][0].to_i == 1
+      if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{h}' LIMIT 1)::int").values[0][0].to_i == 1
         @logger.info 'Post exist in DB will not rewrite'
       else
         @logger.info "Write post to DB #{h}" if @db.exec("INSERT INTO posts (url) VALUES ('#{h}')")
