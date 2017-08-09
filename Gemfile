@@ -8,4 +8,5 @@ end
 ruby '2.4.1'
 gem 'nokogiri'
 gem 'pg'
+gem 'shorturl'
 gem 'telegram-bot-ruby'

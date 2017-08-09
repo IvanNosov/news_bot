@@ -3,6 +3,7 @@ require 'sdbm'
 require 'json'
 require 'logger'
 require 'pg'
+require 'shorturl'
 require_relative 'news_parser'
 
 # telegram bot
@@ -16,7 +17,6 @@ class LozovaNewsBot
       @token = ENV['TELEGRAM_BOT_API_KEY']
     end
     @channel = channel
-    #@db = PG.connect(host: 'localhost', port: '5432', dbname: nil, user: 'postgres', password: '1')
     uri = URI.parse(ENV['DATABASE_URL'])
     @db = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
     @db.exec('CREATE TABLE IF NOT EXISTS posts (id serial, url varchar(450) NOT NULL, sended bool DEFAULT false)')
@@ -28,10 +28,11 @@ class LozovaNewsBot
     parser.news
     parser.tv_news
     parser.links.each do |href|
+      h = ShortURL.shorten(href, :tinyurl)
       if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{href}' LIMIT 1)::int").values[0][0].to_i == 1
         @logger.info 'Post exist in DB will not rewrite'
       else
-        @logger.info "Write post to DB #{href}" if @db.exec("INSERT INTO posts (url) VALUES ('#{href}')")
+        @logger.info "Write post to DB #{h}" if @db.exec("INSERT INTO posts (url) VALUES ('#{h}')")
       end
     end
   end
@@ -39,8 +40,7 @@ class LozovaNewsBot
   def send
     urls = @db.exec('SELECT url FROM posts WHERE sended = false')
     urls.each do |url|
-      href = url['url']
-      if telegram_send(href)
+      if telegram_send(url['url'])
         @db.exec("UPDATE posts SET sended = true WHERE url = '#{url['url']}'")
       end
     end
