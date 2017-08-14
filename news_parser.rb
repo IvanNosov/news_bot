@@ -14,6 +14,7 @@ class NewsParser
   MAIN_NEWS = 'http://lozovarada.gov.ua/golovni-novini.html'.freeze
   NEWS = 'http://lozovarada.gov.ua/novini.html'.freeze
   TV_NEWS = 'https://www.youtube.com/channel/UCGwtjtN1-g9ulJhuInb-zhg'.freeze
+  ADS = 'http://lozovarada.gov.ua/ogoloshennya.html'.freeze
 
   def main_news
     page = Nokogiri::HTML(open(MAIN_NEWS))
@@ -35,4 +36,14 @@ class NewsParser
       @links.push "http://youtube.com#{link['href']}"
     end
   end
+
+  def ads
+    page = Nokogiri::HTML(open(ADS))
+    page.css('div.blog [class="items-leading clearfix"] a').each do |link|
+      @links.push "http://lozovarada.gov.ua#{link['href']}"
+    end
+  end
 end
+a = NewsParser.new
+a.ads
+puts a.links

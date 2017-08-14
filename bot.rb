@@ -8,6 +8,7 @@ require_relative 'news_parser'
 
 # telegram bot
 class LozovaNewsBot
+
   def initialize(channel)
     @logger = Logger.new(STDOUT)
     if ENV['TELEGRAM_BOT_API_KEY'].nil?
@@ -16,17 +17,20 @@ class LozovaNewsBot
     else
       @token = ENV['TELEGRAM_BOT_API_KEY']
     end
+    @token = '431837726:AAEfWFVB5WnEm8OL0Qj69vdgHeeSIHPoQWg'
     @channel = channel
     uri = URI.parse(ENV['DATABASE_URL'])
     @db = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
+    # @db = PG.connect('localhost', 5432, nil, nil, nil, 'postgres', '1')
     @db.exec('CREATE TABLE IF NOT EXISTS posts (id serial, url varchar(450) NOT NULL, sended bool DEFAULT false)')
   end
-#
+
   def sync
     parser = NewsParser.new
     parser.main_news
     parser.news
     parser.tv_news
+    parser.ads
     parser.links.each do |href|
       h = ShortURL.shorten(href, :tinyurl)
       if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{h}' LIMIT 1)::int").values[0][0].to_i == 1
