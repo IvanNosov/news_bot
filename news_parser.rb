@@ -44,6 +44,3 @@ class NewsParser
     end
   end
 end
-a = NewsParser.new
-a.ads
-puts a.links

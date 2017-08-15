@@ -17,7 +17,6 @@ class LozovaNewsBot
     else
       @token = ENV['TELEGRAM_BOT_API_KEY']
     end
-    @token = '431837726:AAEfWFVB5WnEm8OL0Qj69vdgHeeSIHPoQWg'
     @channel = channel
     uri = URI.parse(ENV['DATABASE_URL'])
     @db = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
