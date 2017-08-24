@@ -53,6 +53,7 @@ class LozovaNewsBot
 
   def telegram_send(message)
     Telegram::Bot::Client.run(@token) do |bot|
+      next if (message = '')
       if bot.api.sendMessage(chat_id: @channel.to_s, text: message)
         @logger.info "Successfuly send #{message} to telegram!"
         true
