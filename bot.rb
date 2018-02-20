@@ -31,7 +31,7 @@ class LozovaNewsBot
     parser.tv_news
     parser.ads
     parser.links.each do |href|
-      h = ShortURL.shorten(href, :minilink)
+      h = ShortURL.shorten(href, :snipurl)
       if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{h}' LIMIT 1)::int").values[0][0].to_i == 1
         @logger.info 'Post exist in DB will not rewrite'
       else
