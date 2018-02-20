@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5708a40d-5ca7-4f88-a6e4-1933b7222c51" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/news_bot.iml" afterPath="$PROJECT_DIR$/.idea/news_bot.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/bot.rb" afterPath="$PROJECT_DIR$/bot.rb" />
-    </list>
+    <list default="true" id="5708a40d-5ca7-4f88-a6e4-1933b7222c51" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,12 +132,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1519056050766</updated>
-      <workItem from="1519056051999" duration="2646000" />
+      <workItem from="1519056051999" duration="2689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2646000" />
+    <option name="totallyTimeSpent" value="2689000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1922" height="1085" extended-state="6" />
