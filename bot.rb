@@ -31,7 +31,6 @@ class LozovaNewsBot
     parser.tv_news
     parser.ads
     parser.links.each do |h|
-      # h = ShortURL.shorten(href, :vurl)
       if @db.exec("SELECT exists (SELECT 1 FROM posts WHERE url = '#{h}' LIMIT 1)::int").values[0][0].to_i == 1
         @logger.info 'Post exist in DB will not rewrite'
       else
@@ -52,13 +51,14 @@ class LozovaNewsBot
   private
 
   def telegram_send(message)
+    shorten = ShortURL.shorten(message, :tinyurl)
     Telegram::Bot::Client.run(@token) do |bot|
-      next if (message == '')
-      if bot.api.sendMessage(chat_id: @channel.to_s, text: message)
-        @logger.info "Successfuly send #{message} to telegram!"
+      next if (shorten == '')
+      if bot.api.sendMessage(chat_id: @channel.to_s, text: shorten)
+        @logger.info "Successfuly send #{shorten} to telegram!"
         true
       else
-        @logger.error "Can not send #{message} to telegram!"
+        @logger.error "Can not send #{shorten} to telegram!"
         false
       end
     end
